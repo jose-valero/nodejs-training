@@ -1,0 +1,29 @@
+{
+  "name": "nodejs_curso_1",
+  "version": "0.1.0",
+  "description": "proyecto de chat en curso inicial de nodejs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jose-valero/nodejs-training.git"
+  },
+  "keywords": [
+    "chat",
+    "curso",
+    "server"
+  ],
+  "author": "Jose Valero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jose-valero/nodejs-training/issues"
+  },
+  "homepage": "https://github.com/jose-valero/nodejs-training#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.0"
+  }
+}
