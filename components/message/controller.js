@@ -14,26 +14,32 @@ function addMessage(user, message) {
         }
 
         const response = await store.add(fullMessage)
+        .catch(e=> {
+            reject(e)
+        })
 
         await resolve(response)
     })
 }
 
-function getMessages() {
+function getMessages(fillterUser) {
     return new Promise((resolve, reject) => {
-        resolve(store.list())
+        resolve(store.list(fillterUser)).catch(e => {
+            reject(e)
+        })
     })
 }
 
 function updateMessage(id, message) {
     return new Promise(async (resolve, reject) => {
-        console.log(id)
-        console.log(message)
         if (!id || !message) {
             reject('invalid data')
             return false
         }
         const result = await store.updateText(id, message)
+        .catch(e => {
+            reject(e)
+        })
         resolve(result)
     })
 }

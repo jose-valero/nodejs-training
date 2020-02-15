@@ -1,26 +1,30 @@
 const db = require('mongoose')
-const Message = require('./model');
+const Messege = require('./model');
+
 
 db.Promise = global.Promise
 
 console.log('[db] conectada exitosamente')
 async function addMessage(message) {
-    // message.
-    const myMessage = new Message(message);
+    const myMessage = new Messege(message);
     const saveReponse = await myMessage.save(message);
     return saveReponse
 }
-async function getMessage() {
-
-    const model = await Message.find()
+async function getMessage(fillterUser) {
+    let fillter = {}
+    if (fillterUser !== null) {
+        fillter = {user: fillterUser}
+    }
+    const model = await Messege.find(fillter)
     return model
 }
 
 async function updateText(id, message) {
-    const foundMessage = await Model.findById({
-        _id: id
+    const foundMessage = await Messege.findById(id)
+    .catch(e=> {
+        throw e
     })
-
+    
     foundMessage.message = message
 
     const newMessage = await foundMessage.save()

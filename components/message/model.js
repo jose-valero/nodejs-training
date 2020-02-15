@@ -14,9 +14,7 @@ message: {
 date: {
     type: Date
 },
-id: {
-    type: String
-},
+
 })
 
 const message = mongoose.model('Message', mySchema);
