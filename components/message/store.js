@@ -1,23 +1,34 @@
 const db = require('mongoose')
+const Message = require('./model');
 
 db.Promise = global.Promise
-db.connect('mongodb+srv://db_valero:17410336@cluster0-gb6fa.mongodb.net/test', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true, 
-})
 
-console.log('[la DB] conectada con exito')
-   
-function addMessage(message) {  
-    const myMessage = new Model(message)
-    myMessage.save()
+console.log('[db] conectada exitosamente')
+async function addMessage(message) {
+    // message.
+    const myMessage = new Message(message);
+    const saveReponse = await myMessage.save(message);
+    return saveReponse
+}
+async function getMessage() {
+
+    const model = await Message.find()
+    return model
 }
 
-function getMessage() {
-    return list
+async function updateText(id, message) {
+    const foundMessage = await Model.findById({
+        _id: id
+    })
+
+    foundMessage.message = message
+
+    const newMessage = await foundMessage.save()
+    return newMessage
 }
 
 module.exports = {
     add: addMessage,
     list: getMessage,
+    updateText: updateText,
 }

@@ -1,20 +1,23 @@
 const mongoose = require('mongoose')
 
-const Schema = mongoose.Sechema
+const Schema = mongoose.Schema
 
 const mySchema = new Schema({
   user: {
     type: String,
-    required: true
-  },
-  message: {
+    // required: true
+},
+message: {
     type: String,
-    required: true,
-  },
-  data: {
-    type: Data
-  },
+    // required: true,
+},
+date: {
+    type: Date
+},
+id: {
+    type: String
+},
 })
 
-const model = mongoose.model('Message', mySchema)
-module.exports = model
+const message = mongoose.model('Message', mySchema);
+module.exports = message;
