@@ -14,9 +14,9 @@ function addMessage(user, message) {
         }
 
         const response = await store.add(fullMessage)
-        .catch(e=> {
-            reject(e)
-        })
+            .catch(e => {
+                reject(e)
+            })
 
         await resolve(response)
     })
@@ -37,10 +37,25 @@ function updateMessage(id, message) {
             return false
         }
         const result = await store.updateText(id, message)
-        .catch(e => {
-            reject(e)
-        })
+            .catch(e => {
+                reject(e)
+            })
         resolve(result)
+    })
+}
+
+function deleteMessage(id) {
+    return new Promise((resolve, reject) => {
+        if (!id) {
+            return reject('id invalido')
+        }
+        store.remove(id)
+            .then(() => {
+                resolve()
+            })
+            .catch(e => {
+                reject(e)
+            })
     })
 }
 
@@ -48,5 +63,6 @@ module.exports = {
     addMessage,
     getMessages,
     updateMessage,
+    deleteMessage,
 
 }

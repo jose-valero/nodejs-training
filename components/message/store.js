@@ -10,6 +10,7 @@ async function addMessage(message) {
     const saveReponse = await myMessage.save(message);
     return saveReponse
 }
+
 async function getMessage(fillterUser) {
     let fillter = {}
     if (fillterUser !== null) {
@@ -24,15 +25,21 @@ async function updateText(id, message) {
     .catch(e=> {
         throw e
     })
-    
     foundMessage.message = message
-
     const newMessage = await foundMessage.save()
     return newMessage
+}
+
+function removeMessege(id) {
+    //return Messege.findByIdAndDelate(id)  Alternativa 
+   return Messege.deleteOne({
+        _id: id
+    })
 }
 
 module.exports = {
     add: addMessage,
     list: getMessage,
     updateText: updateText,
+    remove: removeMessege,
 }
