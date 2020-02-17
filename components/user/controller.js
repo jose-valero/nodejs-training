@@ -1,6 +1,6 @@
 const store = require('./store')
 
-function addUser() {
+function addUser(name) {
     if (!name) {
         return Promise.reject('invalid name')
     }
@@ -13,12 +13,15 @@ function addUser() {
 
 function getUsers(filterUser) {
     return new Promise((resolve, reject) => {
-        resolve(store.list(filterUser));
+        resolve(store.list(filterUser))
+        .catch(e=>{
+            reject(e)
+        });
     })
 }
 
 module.exports = {
     addUser,
-    getUsers
+    getUsers,
 
 }
