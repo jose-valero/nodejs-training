@@ -2,28 +2,31 @@ const store = require('./store')
 
 
 function addMessage(user, message) {
-    return new Promise((resolve, reject) => {
-        if (!chat || !user || !message) {
+    return new Promise(async (resolve, reject) => {
+        if (!user || !message) {
             console.error('[MessageController] No hay Usuario o Mensaje')
-             reject('Los datos son incorrectos')
-             return false
+            return reject('Los datos son incorrectos')
         }
         const fullMessage = {
-            chat: chat,
-            user: user, 
+            user: user,
             message: message,
             date: new Date(),
-            
         }
-        store.add(fullMessage)
 
-        resolve(fullMessage)
+        const response = await store.add(fullMessage)
+            .catch(e => {
+                reject(e)
+            })
+
+        await resolve(response)
     })
 }
 
-function getMessages(filterchat) {
+function getMessages(fillterUser) {
     return new Promise((resolve, reject) => {
-        resolve(store.list(filterchat))
+        resolve(store.list(fillterUser)).catch(e => {
+            reject(e)
+        })
     })
 }
 

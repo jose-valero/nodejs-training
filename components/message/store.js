@@ -1,5 +1,5 @@
 const db = require('mongoose')
-const Model = require('./model');
+const Messege = require('./model');
 
 
 db.Promise = global.Promise
@@ -12,31 +12,19 @@ async function addMessage(message) {
 }
 
 async function getMessage(fillterUser) {
-    return new Promise((resolve, reject) => {
-        let fillter = {}
-        if (fillterUser !== null) {
-            fillter = {
-                 user: fillterUser }
-        }
-       Model.find(fillter)
-            .populate('user')
-            .exec((error, populated) => {
-                if (error) {
-                    reject(error)
-                     return false    
-                }
-                resolve(populated)
-            })
-
-    })
-
+    let fillter = {}
+    if (fillterUser !== null) {
+        fillter = {user: fillterUser}
+    }
+    const model = await Messege.find(fillter)
+    return model
 }
 
 async function updateText(id, message) {
     const foundMessage = await Messege.findById(id)
-        .catch(e => {
-            throw e
-        })
+    .catch(e=> {
+        throw e
+    })
     foundMessage.message = message
     const newMessage = await foundMessage.save()
     return newMessage
@@ -44,7 +32,7 @@ async function updateText(id, message) {
 
 function removeMessege(id) {
     //return Messege.findByIdAndDelate(id)  Alternativa 
-    return Messege.deleteOne({
+   return Messege.deleteOne({
         _id: id
     })
 }

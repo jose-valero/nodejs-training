@@ -21,5 +21,5 @@ async function getUsers(filterUser){
 
 module.exports = {
     add: addUser,
-    list: getUsers
+    list: getUsers,
 };
