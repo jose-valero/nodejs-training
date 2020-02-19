@@ -1,22 +1,33 @@
 const store = require('./store')
+const socket = require('../../socket').socket
 
 
-function addMessage(user, message) {
+function addMessage(chat, user, message, file) {
     return new Promise(async (resolve, reject) => {
-        if (!user || !message) {
+        if (!chat || !user || !message) {
             console.error('[MessageController] No hay Usuario o Mensaje')
             return reject('Los datos son incorrectos')
         }
+
+        let fileUrl = '';
+        if(file) {
+            fileUrl = 'http://localhost:3000/app/files' + file.filename
+        }
+
         const fullMessage = {
+            chat: chat,
             user: user,
             message: message,
             date: new Date(),
+            file: fileUrl
         }
 
         const response = await store.add(fullMessage)
             .catch(e => {
                 reject(e)
             })
+
+            socket.io.emit('message', fullMessage)
 
         await resolve(response)
     })

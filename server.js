@@ -1,12 +1,19 @@
 const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+ 
 const bodyParser = require('body-parser')
-const router = require('./network/routes')
+const socket = require('./socket');
 const db = require('mongoose');
-var app = express()
+const router = require('./network/routes')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/app', express.static('public'))
+
+socket.connect(server);
 router(app)
+
+app.use('/app', express.static('public'))
 
 const start = async () => {
     const connection = await db.connect('mongodb+srv://db_valero:17410336@cluster0-gb6fa.mongodb.net/test', {
@@ -20,7 +27,9 @@ const start = async () => {
 }
 start()
     .then(() => {
-        app.listen(3000);
-        console.log('la aplicacion esta escuchando en http://localhost:3000')
+        server.listen(3000, function () {
+            console.log('la aplicacion esta escuchando en http://localhost:3000')
+        });
+
     }
     )

@@ -1,29 +1,32 @@
-// const Model = require('./model')
+const db = require('mongoose')
+const Model = require('./model');
 
-// function addChat(chat) {
-//     const myChat = new Model(chat)
-//     return myChat.save()
+db.Promise = global.Promise
 
-// }
-// function listChats(userId) {
-//     return new Primise((resolve, reject) => {
-//         let filter = {}
-//         if (userId) {
-//             filter = { users: userId }
-//         }
-//         Model.find(filter)
-//             .populate('users')
-//             .exec((err, populated) => {
-//                 if (err) {
-//                     reject(err)
-//                     return false
-//                 }
-//                 resolve(populated)
-//             })
-//     })
-// }
+function addChat(chat) {
+    const myChat = new Model(chat)
+    return myChat.save()
 
-// module.exports = {
-//     add: addChat,
-//     list: listChats,
-// }
+}
+function listChats(userId) {
+    return new Promise((resolve, reject) => {
+        let filter = {}
+        if (userId) {
+            filter = { users: userId }
+        }
+        Model.find(filter)
+            .populate('users')
+            .exec((err, populated) => {
+                if (err) {
+                    reject(err)
+                    return false
+                }
+                resolve(populated)
+            })
+    })
+}
+
+module.exports = {
+    add: addChat,
+    list: listChats,
+}
