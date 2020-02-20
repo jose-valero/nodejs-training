@@ -1,6 +1,6 @@
 const express = require('express')
 const multer = require('multer')
-
+const config =require('../../config')
 const response = require('../../network/response')
 const router = express.Router()
 const controller = require('./controller')
@@ -9,6 +9,7 @@ const controller = require('./controller')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/file')
+        cb(null, `public/${config.filesRoutes}/`)
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '.jpg') //Appending .jpg
